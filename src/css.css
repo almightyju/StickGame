@@ -1,0 +1,969 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: 12px;
+    font-family: "Kristen ITC", Calibri, Tahoma;
+}
+body {
+    background: #EEEEEE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hidden {
+    display: none;
+}
+.collapse {
+    visibility: collapse;
+}
+#play-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+#game {
+    width: 600px;
+    height: 400px;
+    border: 1px solid #AAA;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+}
+#skip {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 102;
+}
+#floor {
+    height: 40px;
+    border-top: 1px solid black;
+    background: #E1E1E1;
+    display: flex;
+    flex-direction: row;
+}
+#wep-row,
+#hp-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+#hp-row > div {
+    justify-content: flex-end;
+}
+#wep-row > div,
+#hp-row > div {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 5px;
+}
+#weapons > div {
+    margin-right: 5px;
+}
+#weapons > div:last-child {
+    margin-right: 0;
+}
+.heart {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+.heart > div {
+    background: red;
+    width: 50%;
+    height: 50%;
+    position: absolute;
+}
+.heart .tl,
+.heart .tr {
+    border-radius: 50%;
+    top: 8%;
+}
+.heart .tl {
+    left: 8%;
+}
+.heart .tr {
+    right: 8%;
+}
+.heart .main {
+    left: 25%;
+    bottom: 25%;
+    transform: rotate(45deg);
+}
+#money {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+#weapons div .weapon > div,
+#ammo .chunk.empty,
+#reloadBar,
+.heart.empty > div {
+    background: #999;
+}
+#ammo {
+    position: relative;
+    height: 100%;
+    display: inline-block;
+}
+#chunks {
+    z-index: 1;
+    display: flex;
+    height: 100%;
+}
+#reloadBar {
+    z-index: 2;
+    opacity: 0.4;
+    display: none;
+    position: absolute;
+    padding: 2px;
+    left: -2px;
+    top: -2px;
+    width: 100%;
+    height: 100%;
+}
+.ammoWrap {
+    display: block;
+}
+#weapons .reloading .weapon > div,
+#ammo.reloading .chunk {
+    background: red;
+}
+#ammo.reloading #reloadBar {
+    display: block;
+}
+#ammo .chunk {
+    background: black;
+    margin: 0 2px;
+}
+#ammo .chunk:first-child {
+    margin-left: 0px;
+}
+#ammo .chunk:last-child {
+    margin-right: 0;
+}
+#ammo .pistol .chunk {
+    width: 3px;
+}
+#ammo .pistol ~ #reloadBar,
+#ammo .pistol .chunk {
+    height: 50%;
+}
+#ammo .uzi .chunk {
+    width: 3px;
+}
+#ammo .uzi ~ #reloadBar,
+#ammo .uzi .chunk {
+    height: 50%;
+}
+#player {
+    width: 20px;
+    height: 26px;
+    z-index: 10;
+}
+#player.right {
+    transform: matrix(- 1, 0, 0, 1, 0, 0);
+}
+#player.hit > div:not(.weapon),
+#player.hit .weapon > div {
+    background: #777;
+}
+.character {
+    position: absolute;
+}
+.mob-money,
+.msg {
+    position: absolute;
+    transition: 2s margin-top, 2s opacity;
+    font-weight: bold;
+    padding: 2px 5px;
+    margin: -10px 0 0 -4px;
+    background: rgba(0, 255, 0, 0.07);
+    border: 1px solid rgba(0, 200, 0, 0.4);
+    z-index: 12;
+}
+.mob-money.anim {
+    margin-top: -40px;
+    opacity: 0;
+}
+.mob {
+    transition: 0.4s transform, 0.2s opacity 0.4s;
+    z-index: 12;
+}
+.mob.dead {
+    transform-origin: 80% 100%;
+    transform: rotate(90deg);
+    opacity: 0;
+}
+.mob.right.dead {
+    transform-origin: 20% 100%;
+    transform: rotate(-90deg);
+}
+.mob.size-1 {
+    width: 18px;
+    height: 20px;
+}
+.mob.size-2 {
+    width: 20px;
+    height: 26px;
+}
+.mob.size-3 {
+    width: 40px;
+    height: 50px;
+}
+.mob.size-4 {
+    width: 100px;
+    height: l80px;
+}
+.character > div {
+    background: black;
+    position: absolute;
+}
+.mob > div {
+    background: green;
+}
+.character .head {
+    top: 0px;
+    left: 50%;
+    height: 28%;
+    width: 50%;
+    margin-left: -25%;
+    border-radius: 50%;
+    z-index: 1;
+}
+.character .body {
+    top: 27%;
+    left: 44%;
+    height: 51%;
+    width: 15%;
+    z-index: 2;
+}
+.character .armL,
+.character .armR,
+.character .legL,
+.character .legR {
+    height: 8%;
+    width: 50%;
+    border-radius: 40%;
+}
+.character .armL {
+    width: 40%;
+    left: 10%;
+    top: 40%;
+    transform-origin: 100% 0%;
+}
+.mob .armL {
+    transform: rotate(-10deg);
+}
+.mob.right .armL {
+    left: auto;
+    right: 9%;
+    top: 27%;
+}
+.character .armR {
+    left: 50%;
+    transform: rotate(30deg);
+    top: 45%;
+}
+.mob .armR {
+    left: 10%;
+    top: 33%;
+    transform: rotate(10deg);
+}
+.mob.right .armR {
+    left: auto;
+    top: 40%;
+    right: 9%;
+}
+.character .legL,
+.character .legR {
+    top: 78%;
+    transition: 0.3s transform 0.1s
+}
+.character .legL {
+    left: 10%;
+    transform: rotate(-60deg);
+    transform-origin: 65% 70%;
+}
+.mob.dead .legL {
+    transform: rotate(-90deg);
+}
+.mob.right.dead .legL {
+    transform: rotate(-80deg);
+}
+.character .legR {
+    left: 40%;
+    transform: rotate(60deg);
+    transform-origin: 40% 100%;
+}
+.mob.dead .legR {
+    transform: rotate(80deg);
+}
+.mob.right.dead .legR {
+    transform: rotate(90deg);
+    transform-origin: 35% 70%;
+}
+#player .weapon {
+    background: none;
+}
+.mob .weapon {
+    display: none;
+}
+.weapon {
+    position: relative;
+}
+#weapons .weapon {
+    width: 100%;
+    height: 100%;
+}
+.weapon > div,
+#weapons .selected .weapon > div {
+    position: absolute;
+    background: black;
+}
+#player.pistol .weapon {
+    left: -20%;
+    top: 30%;
+    width: 40%;
+    height: 20%;
+    transform-origin: 170% 50%;
+}
+#player.uzi .weapon {
+    left: -50%;
+    top: 33%;
+    width: 65%;
+    height: 35%;
+    transform-origin: 160% 20%;
+}
+#weapons .pistol {
+    width: 8px;
+    height: 5.2px;
+}
+.pistol .weapon .wp-1 {
+    width: 100%;
+    height: 40%;
+}
+.pistol .weapon .wp-2 {
+    width: 30%;
+    height: 100%;
+    right: 0;
+}
+#weapons .uzi {
+    width: 13px;
+    height: 10px;
+}
+.uzi .weapon .wp-1 {
+    width: 100%;
+    height: 20%;
+}
+.uzi .weapon .wp-2 {
+    top: 20%;
+    right: 0;
+    width: 80%;
+    height: 20%;
+}
+.uzi .weapon .wp-3 {
+    right: 0;
+    width: 20%;
+    height: 100%;
+}
+.uzi .weapon .wp-4 {
+    left: 40%;
+    top: 40%;
+    width: 20%;
+    height: 50%;
+    transform: rotate(10deg);
+}
+.bullet {
+    position: absolute;
+    width: 5px;
+    height: 2px;
+    background: black;
+    z-index: 12;
+}
+#upgrades {
+    position: absolute;
+    top: -400px;
+    left: 0px;
+    width: 580px;
+    height: 380px;
+    padding: 10px;
+    background: rgba(15, 155, 255, 0.4);
+    overflow: hidden;
+    z-index: 100;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    transition: 2s top cubic-bezier(0.4, 1, 0.4, 1);
+}
+#upgrades.open {
+    top: 0px;
+    z-index: 102;
+}
+#upgrades .header {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+button {
+    background: rgba(135,0,0,0.7);
+    border: 1px solid;
+    padding: 3px 10px;
+    color: rgb(255, 195, 0);
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    margin: 0;
+}
+#upgrades button:disabled {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.3);
+}
+#upgrades .tab-buttons button {
+    border-bottom: none;
+    margin-right: 10px;
+}
+#upgrades .row {
+    display: flex;
+    flex-direction: row;
+}
+#upgrades .upgrade:nth-child(2n + 1) {
+    background: rgba(0, 0, 0, 0.2);
+}
+#upgrades .tab-container {
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.1);
+}
+#upgrades .tabs {
+    display: flex;
+    flex: 1;
+    position: relative;
+    left: 0;
+    transition: 1s left;
+}
+#upgrades .tabs > div {
+    flex: 1;
+    padding: 5px;
+}
+#upgrades div.weapons {
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+#upgrades .wep {
+    padding: 5px;
+    width: 46.8%;
+    margin-bottom: 2%;
+    position: relative;
+}
+#upgrades .wep.bought {
+    border: 1px dotted black;
+}
+#upgrades .wep:nth-child(2n - 1) {
+    margin-right: 2%;
+}
+#upgrades .wep .buy-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#upgrades .wep button.buy {
+    height: auto;
+    transform: rotate(-30deg);
+    font-size: 2.2rem;
+    font-variant: small-caps;
+}
+#upgrades .wep.bought .buy-wrap {
+    display: none;
+}
+#upgrades .wep .wep-wrap {
+    padding: 8px;
+    border: 1px solid black;
+    margin: 2px;
+}
+#upgrades .wep .wep-wrap,
+#upgrades .upgrade > .blocks .block {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#upgrades .wep .wep-text {
+    flex: 1;
+    text-align: center;
+    font-size: 2rem;
+}
+#upgrades .upgrade .blocks {
+    display: flex;
+    flex: 1;
+    order: 2;
+}
+#upgrades .upgrade > span {
+    width: 90px;
+    align-self: center;
+    text-indent: 3px;
+}
+#upgrades .player .upgrade > span {
+    width: 100px;
+}
+#upgrades .upgrade .blocks .block {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 3px 0;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 1px;
+    transition: 0.3s background;
+}
+#upgrades .upgrade:last-child .blocks .block {
+    border-bottom-width: 1px;
+}
+#upgrades .upgrade .blocks .block:last-child {
+    border-right-width: 1px;
+}
+#upgrades .upgrade .blocks .bought.block {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0);
+}
+#upgrades .pistol .weapon {
+    width: 15px;
+    height: 11px;
+}
+#upgrades .uzi .weapon {
+    width: 16px;
+    height: 12px;
+}
+#upgrades .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#car {
+    position: absolute;
+    width: 97px;
+    height: 33px;
+    margin-left: 0;
+    transition: 4s margin-left cubic-bezier(0.8, 0.8, 0.1, 1);
+}
+#car.drive {
+    margin-left: 450px;
+}
+#car div {
+    position: absolute;
+    transition: 1s;
+}
+#car .cbody div {
+    background: dodgerBlue;
+    position: absolute;
+}
+#car .lwheel,
+#car .rwheel {
+    background: black;
+    z-index: 5;
+    border-radius: 20%;
+}
+#car.done-20 .lwheel,
+#car.done-40 .rwheel {
+    border-radius: 50%;
+}
+#car .lwheel {
+    width: 17px;
+    height: 10px;
+    top: 23px;
+    left: 9px;
+}
+#car.done-20 .lwheel {
+    top: 18px;
+    height: 15px;
+}
+#car .rwheel {
+    width: 10px;
+    height: 15px;
+    left: -11px;
+    top: 18px;
+    transform: rotate(20deg);
+}
+#car.done-40 .rwheel {
+    width: 17px;
+    left: 66px;
+    transform: none;
+}
+#car .cbody {
+    top: 10px;
+}
+#car.done-60 .cbody {
+    top: 0px;
+}
+#car .body {
+    width: 37px;
+    height: 23px;
+    left: 22px;
+    top: 0px;
+    z-index: 1;
+}
+#car .lbody {
+    width: 25px;
+    height: 11px;
+    left: 0px;
+    top: 12px;
+}
+#car .rbody {
+    width: 40px;
+    height: 13px;
+    left: 57px;
+    top: 10px;
+    border-radius: 0 5px 4px 0;
+}
+#car .bonnet {
+    width: 20px;
+    height: 2px;
+    left: 75px;
+    top: 11px;
+    transform: rotate(-40deg);
+    transform-origin: 0%;
+}
+#car.done-80 .bonnet {
+    transform: rotate(0deg);
+}
+#car .lslope {
+    width: 25px;
+    height: 10px;
+    left: 6px;
+    top: 5px;
+    transform: rotate(-40deg);
+    border-radius: 0 4px 0 0;
+}
+#car .rslope {
+    width: 27px;
+    height: 14px;
+    left: 52px;
+    top: 4px;
+    transform: rotate(25deg);
+    border-radius: 5px 0 0 0;
+}
+#car .cbody .front-window,
+#car .cbody .front-window-slope,
+#car .cbody .front-window-slope-fill {
+    background: #DDD;
+    z-index: 2;
+}
+#car .front-window {
+    left: 43px;
+    top: 2px;
+    width: 15px;
+    height: 17px;
+}
+#car .front-window-slope {
+    left: 55px;
+    top: 5px;
+    width: 18px;
+    height: 4.5px;
+    transform: rotate(25deg);
+}
+#car .front-window-slope-fill {
+    left: 58px;
+    top: 7px;
+    width: 12px;
+    height: 12px;
+}
+#car .door {
+    width: 29px;
+    height: 7px;
+    left: 43px;
+    top: 12px;
+    position: absolute;
+    z-index: 4;
+}
+#car .door .top {
+    top: 0px;
+    width: 100%;
+    height: 4px;
+}
+#car .door .bottom {
+    bottom: 0px;
+    width: 100%;
+    height: 4px;
+}
+#car .door.open {
+    left: 60px;
+    width: 12px;
+}
+#car .door.open .top {
+    transform: rotate(6deg);
+    top: -1px;
+    left: lpx;
+}
+#car .door.open .bottom {
+    transform: rotate(-5deg);
+    bottom: -5px;
+    left: 1px;
+}
+#car .player {
+    left: 48px;
+    top: 4px;
+    background: none;
+    z-index: 3
+}
+#car .player div {
+    background: black;
+}
+#car .player .head {
+    left: 0px;
+    top: 0px;
+    width: 10px;
+    height: 8px;
+    border-radius: 50%;
+}
+#car .player .body {
+    left: 3px;
+    top: 8px;
+    width: 3px;
+    height: 6px;
+}
+#car .player .arms {
+    left: 4px;
+    top: 8px;
+    width: 12px;
+    height: 2px;
+}
+#car .player .legs {
+    left: 4px;
+    top: 12px;
+    width: 9px;
+    height: 3px;
+    transform: rotate(4deg);
+}
+#car .hp {
+    background: none;
+    width: 60%;
+    height: 5px;
+    top: -12px;
+    left: 15%;
+    border: 1px solid #AAA;
+}
+#car .hp,
+#car .hp div {
+    transition: 0.2s;
+}
+#car .hp .bar {
+    height: 100%;
+    background: #CCC;
+}
+#car .hp.damage {
+    border-color: darkRed;
+}
+#car .hp.damage .bar {
+    background: red;
+}
+#car .hp.active {
+    border-color: black;
+}
+#car .hp.active .bar {
+    background: dodgerBlue;
+}
+#car .wep {
+    width: 14px;
+    height: 9px;
+    left: 42px;
+    bottom: 6px;
+    transform: rotate(17deg);
+    z-index: 3;
+    transition: 0.2s opacity;
+}
+#car .wep.anim {
+    opacity: 0;
+}
+#car .weapon {
+    width: 100%;
+    height: 100%;
+}
+#house {
+    left: 40px;
+    bottom: 0px;
+    position: absolute;
+}
+#house .roof {
+    background: grey;
+    width: 220px;
+    height: 50px;
+    border-bottom: 5px solid black;
+    border-top: 2px solid black;
+    position: relative;
+}
+#house .roof .tl-blackout,
+#house .roof .rt-blackout {
+    background: #EEE;
+    border-bottom: 2px solid black;
+    position: absolute;
+}
+#house .roof .tl-blackout {
+    left: -15px;
+    top: -20px;
+    width: 110px;
+    height: 46px;
+    transform: rotate(-27deg);
+}
+#house .roof .rt-blackout {
+    left: 125px;
+    top: -20px;
+    width: 111px;
+    height: 46px;
+    transform: rotate(27deg);
+}
+#house .main {
+    border: 3px solid black;
+    border-top: none;
+    border-bottom-width: 1px;
+    width: 200px;
+    height: 65px;
+    margin-left: 7px;
+    position: relative;
+}
+#house .main .overlay {
+    background: #DDD;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 11;
+}
+#house .main .overlay.left {
+    width: 20px;
+}
+#house .main .overlay.right {
+    right: 0px;
+    width: 20px;
+}
+#house .main .overlay.top {
+    height: 11px;
+}
+#house .main .overlay.bottom {
+    bottom: 0px;
+    height: 10px;
+}
+#house .main .overlay.mid {
+    left: 84px;
+    width: 32px;
+}
+#house .window {
+    background: #EEE;
+    border: 2px solid black;
+    position: absolute;
+    width: 60px;
+    height: 40px;
+}
+#house .window div {
+    background: black;
+    position: absolute;
+}
+#house .window .horiz {
+    height: 2px;
+    width: 100%;
+    top: 50%;
+    margin-top: -1px
+}
+#house .window .vert {
+    width: 2px;
+    height: 100%;
+    left: 50%;
+    margin-left: -1px;
+}
+#house .window.bl {
+    bottom: 10px;
+    left: 20px;
+}
+#house .window.br {
+    bottom: 10px;
+    right: 20px;
+}
+#house .door {
+    background: black;
+    position: absolute;
+    bottom: 0;
+    right: -3px;
+    width: 3px;
+    height: 35px;
+    transition: 0.1s transform;
+    transform-origin: 150% 94%;
+}
+#house .door.smash {
+    transform: rotate(70deg);
+}
+#house .foundation,
+#house .stair-1,
+#house .stair-2 {
+    background: #CCC;
+    border-style: solid;
+    border-color: black;
+    float: left;
+}
+#house .foundation {
+    border-width: 1px 1px 0 1px;
+    width: 250px;
+    height: 20px;
+    margin-left: 7px;
+}
+#house .stair-1,
+#house .stair-2 {
+    width: 20px;
+    border-width: 1px 1px 0 0;
+    margin-left: -1px;
+}
+#house .stair-1 {
+    height: 13px;
+    margin-top: 7px;
+}
+#house .stair-2 {
+    height: 6px;
+    margin-top: 14px;
+}
+.mob.intro {
+    transition: 0.1s transform;
+    z-index: 1;
+}
+.mob.intro.dead {
+    opacity: 1;
+    transform-origin: 60% 90%;
+}
+.msg {
+    transition: 1s opacity, 1s margin;
+    z-index: 12;
+}
+.msg.player {
+    background: rgba(240, 240, 240, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.9)
+}
+.msg.anim {
+    margin-top: -10px;
+    opacity: 0;
+}
+#endGame {
+    background: rgba(15, 155, 255, 0.4);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: 0.5s opacity;
+}
+#endGame.anim {
+    opacity: 1;
+    z-index: 103;
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="js/EventHandler.js"></script>
+    <script src="js/Ex.js"></script>
+    <script src="js/DomObj.js"></script>
+    <script src="js/Mobs.js"></script>
+    <script src="js/Car.js"></script>
+    <script src="js/Player.js"></script>
+    <script src="js/GUI.js"></script>
+    <script src="js/Upgrades.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/cutscene/WalkOutHouse.js"></script>
+    <script src="js/cutscene/RunAway.js"></script>
+    <script src="js/cutscene/DriveAway.js"></script>
+    <script src="js/cutscene/EndGame.js"></script>
+    <link rel="stylesheet" href="css.css" />
+</head>
+
+<body>
+    <div id="game">
+        <div id="endGame">
+            <div>
+                <p class="loose hidden">Well you died, try harder...</p>
+                <p class="win">Well you won, or finished, or whatever, congrats...</p>
+                <p>Thanks for playing this shoddy, thrown together, poorly balanced and poorly made game</p>
+                <p>peace</p>
+            </div>
+        </div>
+        <div id="upgrades">
+            <div class="header">Upgrades</div>
+            <div class="tab-buttons"><button class="weapons">Weapons</button><button class="player">Player</button></div>
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="weapons">
+                        <div class="wep">
+                            <div class="row">
+                                <div class="wep-wrap">
+                                    <div class="weapon"></div>
+                                </div>
+                                <span class="wep-text">Pistol</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player">
+                        <div class="upgrades"></div>
+                        <button class="heal">Heal</button>
+                    </div>
+                </div>
+            </div><button class="close">X</button></div>
+        <div id="play-area">
+            <button id="skip">Skip &gt;&gt;</button>
+            <div id="player" class="character">
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="armL"></div>
+                <div class="armR"></div>
+                <div class="legL"></div>
+                <div class="legR"></div>
+                <div class="weapon"></div>
+            </div>
+            <div id="car" class="hidden">
+                <div class="lwheel"></div>
+                <div class="rwheel"></div>
+                <div class="cbody">
+                    <div class="body"></div>
+                    <div class="lbody"></div>
+                    <div class="rbody"></div>
+                    <div class="lslope"></div>
+                    <div class="rslope"></div>
+                    <div class="bonnet"></div>
+                    <div class="front-window"></div>
+                    <div class="front-window-slope"></div>
+                    <div class="front-window-slope-fill"></div>
+                    <div class="door">
+                        <div class="top"></div>
+                        <div class="bottom"></div>
+                    </div>
+                    <div class="player hidden">
+                        <div class="head"></div>
+                        <div class="body"></div>
+                        <div class="arms"></div>
+                        <div class="legs"></div>
+                    </div>
+                </div>
+                <div class="wep uzi">
+                    <div class="weapon"></div>
+                </div>
+                <div class="hp">
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div id="house">
+                <div class="roof">
+                    <div class="tl-blackout"></div>
+                    <div class="rt-blackout"></div>
+                </div>
+                <div class="main">
+                    <div class="overlay left"></div>
+                    <div class="overlay right"></div>
+                    <div class="overlay top"></div>
+                    <div class="overlay bottom"></div>
+                    <div class="overlay mid"></div>
+                    <div class="window-bg bl"></div>
+                    <div class="window bl">
+                        <div class="horiz"></div>
+                        <div class="vert"></div>
+                    </div>
+                    <div class="window-bg br"></div>
+                    <div class="window br">
+                        <div class="horiz"></div>
+                        <div class="vert"></div>
+                    </div>
+                    <div class="door"></div>
+                </div>
+                <div class="foundation"></div>
+                <div class="stair-1"></div>
+                <div class="stair-2"></div>
+            </div>
+        </div>
+        <div id="floor">
+            <div id="wep-row">
+                <div id="weapons"></div>
+                <div class="ammoUrap">
+                    <div id="ammo">
+                        <div id="chunks"></div>
+                        <div id="reloadBar"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="wave-text"></div>
+            <div id="hp-row">
+                <div id="money"></div>
+                <div id="hp">
+                    <div class="heart">
+                        <div class="tl"></div>
+                        <div class="tr"></div>
+                        <div class="main"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
